@@ -5,3 +5,11 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+Stock.create([
+    {name: 'Tesla', price: 607.80, category: 'clean energy'},
+    {name: 'Amazon', price: 1230.90, category: 'retail'},
+])
+
+stock_a = Stock.create({name: 'Blockbuster', price: 0.21, category: 'entertainment'})
+
+stock_a.comments.create({comment: "To the moon", commentor: "John"})

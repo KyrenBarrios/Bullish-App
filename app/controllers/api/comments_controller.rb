@@ -5,24 +5,21 @@ class CommentsController < ApplicationController
   def index
     @comments = Comment.all
 
-    render json: @comments
+    render json: @comments, status: 200
   end
 
   # GET /comments/1
   def show
     render json: @comment
+
+    render json: @comment, status: 200
   end
 
   # POST /comments
   def create
-    @comment = Comment.new(comment_params)
-
-    if @comment.save
-      render json: @comment, status: :created, location: @comment
-    else
-      render json: @comment.errors, status: :unprocessable_entity
-    end
-  end
+    @comment = Comment.create(comment_params)
+    render json: @comment, include: [:stock], status: 200
+end
 
   # PATCH/PUT /comments/1
   def update
@@ -35,14 +32,12 @@ class CommentsController < ApplicationController
 
   # DELETE /comments/1
   def destroy
-    @comment.destroy
-  end
-
+    @review = Comment.find(params[:id])
+    @review.destroy
+    render json: ("This comment was deleted successfully.").to_json
+end
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_comment
-      @comment = Comment.find(params[:id])
-    end
+   
 
     # Only allow a trusted parameter "white list" through.
     def comment_params

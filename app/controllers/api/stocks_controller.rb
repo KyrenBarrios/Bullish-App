@@ -5,38 +5,38 @@ class StocksController < ApplicationController
   def index
     @stocks = Stock.all
 
-    render json: @stocks
+    render json: @stocks, include: [:comments], status: 200
   end
 
   # GET /stocks/1
   def show
-    render json: @stock
+
+    @stocks = Stock.find(params[:id])
+
+    render json: @stock, status: 200
   end
 
   # POST /stocks
   def create
-    @stock = Stock.new(stock_params)
+    @stock = Stock.create(stock_params)
 
-    if @stock.save
-      render json: @stock, status: :created, location: @stock
-    else
-      render json: @stock.errors, status: :unprocessable_entity
-    end
-  end
+    render json: @stock, include: [:comments], status: 200
+end
 
-  # PATCH/PUT /stocks/1
-  def update
-    if @stock.update(stock_params)
-      render json: @stock
-    else
-      render json: @stock.errors, status: :unprocessable_entity
-    end
-  end
+def update
+    @stock = Stock.find(params[:id])
+    @stock.update(stock_params)
 
-  # DELETE /stocks/1
-  def destroy
-    @stock.destroy
-  end
+    render json: @stock, status: 200
+end
+
+def destroy
+    @stock = Stock.find(params[:id])
+    @stock.delete
+
+    render json: {stock_id: @stock.id}
+
+end
 
   private
     # Use callbacks to share common setup or constraints between actions.
