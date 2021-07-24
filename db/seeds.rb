@@ -10,6 +10,6 @@ Stock.create([
     {name: 'Amazon', price: 1230.90, category: 'retail'},
 ])
 
-stock_a = Stock.create({name: 'Blockbuster', price: 0.21, category: 'entertainment'})
+stock_a = Stock.create({name: 'Blockbuster', price: 500, category: 'entertainment'})
 
 stock_a.comments.create({comment: "To the moon", commentor: "John"})
